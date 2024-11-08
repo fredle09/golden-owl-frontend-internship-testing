@@ -5,35 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { useSearchParams } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { SUBJECTS_KEY_VALUE } from "@/utils";
+import { fetcher } from "@/utils/function";
 
-
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  if (!res.ok) {
-    if (res.status === 404) { return null; }
-    throw new Error("An error occurred while fetching the data.");
-  }
-
-  const payload = await res.json();
-  return payload.data;
-}
-
-type Subject = {
-  key: string;
-  name: string;
-}
-
-const subjects: Subject[] = [
-  { key: "math", name: "Math" },
-  { key: "literature", name: "Literature" },
-  { key: "foreignLanguage", name: "Foreign Language" },
-  { key: "physics", name: "Physics" },
-  { key: "chemistry", name: "Chemistry" },
-  { key: "biology", name: "Biology" },
-  { key: "history", name: "History" },
-  { key: "geography", name: "Geography" },
-  { key: "civics", name: "Civics" },
-];
 
 export const DetailScores = () => {
   const searchParams = useSearchParams();
@@ -67,7 +41,7 @@ export const DetailScores = () => {
                         Student ID: {data.studentId} | Foreign Language Code: {data.foreignCode}
                       </TableCaption>
                       <TableBody>
-                        {subjects.map((subject) => (
+                        {SUBJECTS_KEY_VALUE.map((subject) => (
                           <TableRow key={subject.name}>
                             <TableCell className="font-medium">{subject.name}</TableCell>
                             <TableCell>{data[subject.key] !== null ? (data[subject.key] as number).toFixed(2) : 'N/A'}</TableCell>
@@ -84,7 +58,7 @@ export const DetailScores = () => {
                       <TableHeader>
                         <TableRow>
                           <TableHead className="w-[100px]">Student ID</TableHead>
-                          {subjects.map((subject) => (
+                          {SUBJECTS_KEY_VALUE.map((subject) => (
                             <TableHead key={subject.key} className="min-w-[100px]">{subject.name}</TableHead>
                           ))}
                         </TableRow>
@@ -92,7 +66,7 @@ export const DetailScores = () => {
                       <TableBody>
                         <TableRow>
                           <TableCell className="font-medium">{data.studentId}</TableCell>
-                          {subjects.map((subject) => (
+                          {SUBJECTS_KEY_VALUE.map((subject) => (
                             <TableCell key={subject.key}>
                               {data[subject.key] !== null ? (data[subject.key] as number).toFixed(2) : 'N/A'}
                             </TableCell>
