@@ -7,9 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const RegistrationForm = () => {
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const formSchema = z.object({
@@ -21,7 +22,7 @@ export const RegistrationForm = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      sbd: "",
+      sbd: searchParams.get("sbd") || "",
     },
   });
 

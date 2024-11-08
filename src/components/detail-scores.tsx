@@ -3,25 +3,44 @@
 import useSWR from "swr";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { useSearchParams } from "next/navigation";
+import { Skeleton } from "./ui/skeleton";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) {
-    if (res.status === 404) { throw res; }
+    if (res.status === 404) { return null; }
     throw new Error("An error occurred while fetching the data.");
   }
 
   const payload = await res.json();
-  return payload;
+  return payload.data;
 }
+
+type Subject = {
+  key: string;
+  name: string;
+}
+
+const subjects: Subject[] = [
+  { key: "math", name: "Math" },
+  { key: "literature", name: "Literature" },
+  { key: "foreignLanguage", name: "Foreign Language" },
+  { key: "physics", name: "Physics" },
+  { key: "chemistry", name: "Chemistry" },
+  { key: "biology", name: "Biology" },
+  { key: "history", name: "History" },
+  { key: "geography", name: "Geography" },
+  { key: "civics", name: "Civics" },
+];
 
 export const DetailScores = () => {
   const searchParams = useSearchParams();
   const sbd = searchParams.get("sbd");
 
   const { data, isLoading, error } = useSWR(
-    sbd ? `https://jsonplaceholder.typicode.com/todos/${sbd}` : null, fetcher)
+    sbd ? `/api/scores/${sbd}` : null, fetcher)
 
   return (
     <Card>
@@ -32,19 +51,63 @@ export const DetailScores = () => {
       {sbd && (
         <CardContent>
           <p>SBD: {sbd}</p>
-          {isLoading && <p>Loading...</p>}
-          {error && (
-            error?.status === 404 ? (
-              <></>
+          {error ? (
+            <p className="text-red-500">Error: {error.message}</p>
+          ) : (
+            isLoading ? (
+              <Skeleton className="w-full h-12" />
             ) : (
-              <p>Failed to load data: {error.message}</p>
+              !data ? (
+                <p className="text-red-500">No data found</p>
+              ) : (
+                <>
+                  <div className="md:hidden">
+                    <Table>
+                      <TableCaption className="mb-2">
+                        Student ID: {data.studentId} | Foreign Language Code: {data.foreignCode}
+                      </TableCaption>
+                      <TableBody>
+                        {subjects.map((subject) => (
+                          <TableRow key={subject.name}>
+                            <TableCell className="font-medium">{subject.name}</TableCell>
+                            <TableCell>{data[subject.key] !== null ? (data[subject.key] as number).toFixed(2) : 'N/A'}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                  <div className="hidden md:block">
+                    <Table>
+                      <TableCaption className="mb-2">
+                        Foreign Language Code: {data.foreignCode}
+                      </TableCaption>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-[100px]">Student ID</TableHead>
+                          {subjects.map((subject) => (
+                            <TableHead key={subject.key} className="min-w-[100px]">{subject.name}</TableHead>
+                          ))}
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-medium">{data.studentId}</TableCell>
+                          {subjects.map((subject) => (
+                            <TableCell key={subject.key}>
+                              {data[subject.key] !== null ? (data[subject.key] as number).toFixed(2) : 'N/A'}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </>
+              )
             )
           )}
-          {data && (
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          )}
         </CardContent>
-      )}
-    </Card>
+      )
+      }
+    </Card >
   );
 };
