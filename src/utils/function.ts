@@ -4,7 +4,10 @@ export const fetcher = async (url: string) => {
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-      cache: 'no-cache', // This ensures it will use only the cached data
+      cache: 'force-cache', // This ensures it will use only the cached data
+      next: {
+        revalidate: 1 * 60 * 1000, // Revalidate every 5 minutes
+      }
     });
 
     if (!res.ok) {
