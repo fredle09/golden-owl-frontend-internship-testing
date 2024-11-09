@@ -48,7 +48,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function StackBar() {
-  const { data, isLoading, error } = useSWR("/api/scores/range-counts", fetcher);
+  const { data, isLoading, error } = useSWR("https://golden-owl-backend-internship-testing.onrender.com/v1/scores/range-counts", fetcher);
   const [selectedRanges, setSelectedRanges] = useState<string[]>([
     "LESS_THAN_4",
     "BETWEEN_4_AND_6",
