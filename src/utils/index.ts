@@ -27,6 +27,6 @@ export const SCORE_RANGES = {
   GREATER_THAN_OR_EQUAL_8: ">=8",
 };
 
-// export const PUBLIC_BACKEND_URL = "https://golden-owl-backend-internship-testing.onrender.com";
-export const PUBLIC_BACKEND_URL = "http://localhost:3001";
+export const PUBLIC_BACKEND_URL = "https://golden-owl-backend-internship-testing.onrender.com";
+// export const PUBLIC_BACKEND_URL = "http://localhost:3001";
 
