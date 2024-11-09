@@ -1,7 +1,7 @@
 import { badRequestResponse, errorResponse, notFoundResponse, successResponse } from "@/utils/response.handler";
 
 export const GET = async () => {
-  return new Promise((resolve, reject) => {
+  return new Promise<Response>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const url = `${process.env.PUBLIC_BACKEND_URL}/v1/scores/range-counts`;
 
@@ -35,4 +35,4 @@ export const GET = async () => {
 
     xhr.send();  // Send the request
   });
-}
+};
