@@ -4,6 +4,8 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import Header from "@/components/header";
+import { DynamicBreadcrumb } from "@/components/breadcrum";
+import { ScrollToTopButton } from "@/components/scroll-to-top-button";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,10 +36,14 @@ export default function RootLayout({
         <SidebarProvider>
           <AppSidebar />
           <div className="w-full items-start">
-            <SidebarTrigger className="sticky top-2 ml-2" />
-            <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-[100dvh] p-8 sm:pt-0 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+            <SidebarTrigger className="sticky top-2 ml-2 z-50" />
+            <div className="flex flex-col items-start justify-items-center min-h-[100dvh] font-[family-name:var(--font-geist-sans)] -mt-8">
               <Header />
-              {children}
+              <div className="p-8 pt-4 sm:pt-0 pb-20 sm:p-20 w-full">
+                <DynamicBreadcrumb />
+                {children}
+              </div>
+              <ScrollToTopButton />
             </div>
           </div>
         </SidebarProvider>

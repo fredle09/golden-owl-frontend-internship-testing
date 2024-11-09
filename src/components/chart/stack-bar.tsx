@@ -69,7 +69,7 @@ export function StackBar() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row justify-between items-end">
+      <CardHeader className="flex flex-row justify-between items-start">
         <div>
           <CardTitle>Bar Chart - Stacked</CardTitle>
           <CardDescription>Chart of Subjects and High School Exam Scores for 2024</CardDescription>
@@ -77,12 +77,12 @@ export function StackBar() {
 
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant={"outline"}>
+            <Button variant="outline" className="!mt-0">
               Filter
               <ChevronDown className="-mr-1.5" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="p-4 space-y-2 bg-white shadow-lg rounded-lg w-48">
+          <PopoverContent className="p-4 space-y-2 bg-white shadow-lg rounded-lg w-48" align="end">
             <div className="space-y-1">
               {Object.entries(chartConfig).map(([key, { label }]) => (
                 <div key={key} className="filter-option flex items-center space-x-2">
