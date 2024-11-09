@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import Header from "@/components/header";
 
@@ -34,7 +34,8 @@ export default function RootLayout({
         <SidebarProvider>
           <AppSidebar />
           <div className="w-full items-start">
-            <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:pt-0 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+            <SidebarTrigger className="sticky top-2 ml-2" />
+            <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-[100dvh] p-8 sm:pt-0 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
               <Header />
               {children}
             </div>
