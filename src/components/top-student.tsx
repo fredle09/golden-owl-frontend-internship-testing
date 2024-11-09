@@ -18,8 +18,6 @@ export const TopStudent = () => {
     fetcher
   );
 
-  console.log(`${PUBLIC_BACKEND_URL}/v1/scores?sort=${chooseGroup}&limit=${chooseLimit}`);
-
   return (
     <div className="w-full aspect-video gap-4">
       <h1 className="font-bold text-xl inline-flex flex-row items-center gap-2 text-nowrap mb-8">
