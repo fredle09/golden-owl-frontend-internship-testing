@@ -1,7 +1,7 @@
 "use client";
 
 import { fetcher } from "@/utils/function";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import useSWR from "swr"
 import { Skeleton } from "./ui/skeleton";
 import StudentScore from "./student-score";
@@ -49,17 +49,17 @@ export const TopStudent = () => {
       <div className="flex flex-col gap-4">
         {isLoading ? (
           Array.from({ length: 10 }).map((_, index) => (
-            <Skeleton key={index} className="w-full h-48" />
+            <Skeleton key={index} className="w-full h-24" />
           ))
         ) : (
           error ? (
             <p>Error: {error?.message}</p>
           ) : (
             data?.map((student: TScore, index: number) => (
-              <>
+              <Fragment key={student.studentId}>
                 <h2 className="font-mono font-bold text-md">TOP {index + 1}: {Number(student[chooseGroup]?.toFixed(2))}</h2>
-                <StudentScore key={student.studentId} data={student} hideCaption />
-              </>
+                <StudentScore data={student} hideCaption />
+              </Fragment>
             )))
         )}
       </div>
