@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { useSearchParams } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
-import { SUBJECTS_KEY_VALUE } from "@/utils";
+import { PUBLIC_BACKEND_URL, SUBJECTS_KEY_VALUE } from "@/utils";
 import { fetcher } from "@/utils/function";
 
 
@@ -14,7 +14,7 @@ export const DetailScores = () => {
   const sbd = searchParams.get("sbd");
 
   const { data, isLoading, error } = useSWR(
-    sbd ? `/api/scores/${sbd}` : null, fetcher)
+    sbd ? `${PUBLIC_BACKEND_URL}/v1/scores/${sbd}` : null, fetcher)
 
   return (
     <Card>
